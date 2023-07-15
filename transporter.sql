@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 14, 2023 at 07:21 AM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.1.12
+-- Generation Time: Jul 15, 2023 at 04:17 AM
+-- Server version: 10.3.16-MariaDB
+-- PHP Version: 7.3.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `transpoter`
+-- Database: `transporter`
 --
 
 -- --------------------------------------------------------
@@ -29,14 +30,22 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `barangs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `nama_barang` varchar(255) NOT NULL,
-  `kode_barang` varchar(255) NOT NULL,
-  `description` text NOT NULL,
+  `nama_barang` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `kode_barang` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `stok_barang` int(11) NOT NULL,
   `harga_barang` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `is_active` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `barangs`
+--
+
+INSERT INTO `barangs` (`id`, `nama_barang`, `kode_barang`, `description`, `stok_barang`, `harga_barang`, `created_at`, `updated_at`, `is_active`) VALUES
+(1, 'Sepatu Dinas', 'SPT DIN', 'SEPATU DINAS', 10, 1000000, '2023-07-14 10:58:55', '2023-07-14 10:58:55', 1);
 
 -- --------------------------------------------------------
 
@@ -46,11 +55,11 @@ CREATE TABLE `barangs` (
 
 CREATE TABLE `failed_jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(255) NOT NULL,
-  `connection` text NOT NULL,
-  `queue` text NOT NULL,
-  `payload` longtext NOT NULL,
-  `exception` longtext NOT NULL,
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -62,11 +71,11 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `kurir` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
-  `remember_token` varchar(100) DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -79,11 +88,19 @@ CREATE TABLE `kurir` (
 
 CREATE TABLE `lokasi` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `nama_lokasi` varchar(255) NOT NULL,
-  `kode_lokasi` varchar(255) NOT NULL,
+  `nama_lokasi` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `kode_lokasi` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `lokasi`
+--
+
+INSERT INTO `lokasi` (`id`, `nama_lokasi`, `kode_lokasi`, `created_at`, `updated_at`) VALUES
+(1, 'Kranggan', 'KR', '2023-07-14 10:47:02', '2023-07-14 10:47:02'),
+(2, 'Tanjung Duren', 'TJD', '2023-07-14 11:25:26', '2023-07-14 11:25:26');
 
 -- --------------------------------------------------------
 
@@ -93,7 +110,7 @@ CREATE TABLE `lokasi` (
 
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -110,7 +127,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (6, '2023_07_13_003201_create_pengirims_table', 1),
 (7, '2023_07_13_004712_kurir_table', 1),
 (8, '2023_07_13_102836_create_lokasis_table', 1),
-(9, '2023_07_13_165904_barang_id_table', 1);
+(9, '2023_07_13_165904_barang_id_table', 1),
+(10, '2023_07_12_164743_add_is_active_table', 2);
 
 -- --------------------------------------------------------
 
@@ -119,8 +137,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) NOT NULL,
-  `token` varchar(255) NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -132,7 +150,7 @@ CREATE TABLE `password_resets` (
 
 CREATE TABLE `pengirim` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `no_pengiriman` varchar(255) NOT NULL,
+  `no_pengiriman` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tanggal` date NOT NULL,
   `lokasi_id` int(11) NOT NULL,
   `harga_barang` int(11) NOT NULL,
@@ -143,6 +161,13 @@ CREATE TABLE `pengirim` (
   `barang_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `pengirim`
+--
+
+INSERT INTO `pengirim` (`id`, `no_pengiriman`, `tanggal`, `lokasi_id`, `harga_barang`, `jumlah_barang`, `user_id`, `created_at`, `updated_at`, `barang_id`) VALUES
+(2, '001', '2023-07-15', 1, 200000, 2, 1, '2023-07-14 11:13:57', '2023-07-14 11:13:57', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -151,8 +176,8 @@ CREATE TABLE `pengirim` (
 
 CREATE TABLE `role` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `rolename` varchar(255) NOT NULL,
-  `user_id` varchar(255) NOT NULL,
+  `rolename` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -165,14 +190,21 @@ CREATE TABLE `role` (
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
-  `remember_token` varchar(100) DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Eric', 'admin@email.com', NULL, '$2y$10$qmXoqPkOW.AqujLdgU3kBuRFrEUu/xzjjAmkYwrP2Of1FpZ0MC3Ku', NULL, '2023-07-14 10:20:33', '2023-07-14 10:20:33');
 
 --
 -- Indexes for dumped tables
@@ -243,7 +275,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `barangs`
 --
 ALTER TABLE `barangs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -261,19 +293,19 @@ ALTER TABLE `kurir`
 -- AUTO_INCREMENT for table `lokasi`
 --
 ALTER TABLE `lokasi`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `pengirim`
 --
 ALTER TABLE `pengirim`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -285,7 +317,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
