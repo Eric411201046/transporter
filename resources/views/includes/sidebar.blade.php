@@ -57,7 +57,7 @@
                 </li>
                  <li class="nav-item">
                     <a href="{{route('lokasi.index')}}">
-                    <i class="fas fa-align-justify"></i>
+                    <i class="fas fa-map-marker-alt"></i>
                         <p>Lokasi</p>
                     </a>
                 </li>
